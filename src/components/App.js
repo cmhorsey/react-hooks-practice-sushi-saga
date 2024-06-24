@@ -6,9 +6,8 @@ const API = "http://localhost:3001/sushis"
 
 function App() {
   const [sushiList, setAllSushi] = useState([])
-  //set all sushi
-  //initial fetch
-  //pass to sushi to sushi container
+  const [eatenSushis, setEatenSushis] = useState([])
+  const [remainingMoney, setRemainingMoney] = useState(100)
 
   const getSushi = () => {
     fetch(API)
@@ -22,10 +21,21 @@ function App() {
     getSushi()
   }, [])
 
+  function handleEatSushi(sushi) {
+    if (remainingMoney >= sushi.price && !eatenSushis.includes(sushi.id)) {
+      setEatenSushis([...eatenSushis, sushi.id])
+      setRemainingMoney(remainingMoney - sushi.price)
+    }
+  }
+
   return (
     <div className="app">
-      <SushiContainer sushiList={sushiList} />
-      <Table />
+      <SushiContainer
+        sushiList={sushiList}
+        eatSushi={handleEatSushi}
+        eatenSushis={eatenSushis}
+      />
+      <Table remainingMoney={remainingMoney} plates={eatenSushis} />
     </div>
   )
 }
