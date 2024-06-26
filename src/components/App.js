@@ -35,7 +35,11 @@ function App() {
         eatSushi={handleEatSushi}
         eatenSushis={eatenSushis}
       />
-      <Table remainingMoney={remainingMoney} plates={eatenSushis} />
+      <Table
+        remainingMoney={remainingMoney}
+        plates={eatenSushis}
+        setRemainingMoney={setRemainingMoney}
+      />
     </div>
   )
 }
